@@ -111,3 +111,15 @@ from the top down, so you should order them accordingly.
 * USER      -   Sets the user name or UID to use when running an image
 * WORKDIR   -   Sets the working directory for any RUN, CMD, ENTRYPOINT, COPY, and ADD commands
 * ONBUILD   -   Adds an instruction to be executed later, when the image is used as the base for another build
+
+*   Dockerfile 
+    - Example
+    ``` bash
+    # syntax=docker/dockerfile:1
+        FROM node:18-alpine
+        WORKDIR /app
+        COPY . .
+        RUN yarn install --production
+        CMD ["node", "src/index.js"]
+        EXPOSE 3000
+    ```
