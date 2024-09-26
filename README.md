@@ -160,3 +160,49 @@ from the top down, so you should order them accordingly.
         docker save <imageName> -0 <fileName>.tar     # to save image 
         docker load -i <fileName>.tar                 # to load image
     ```
+
+
+#### What is the use of the docker save and docker load commands?
+    - A Docker image can be exported as an archive via the docker save command. For example:
+    ``` bash
+        docker save -o <container-export-path>.tar <container-name>
+    ```
+    - The exported Docker image can then be imported to another Docker host via the docker load command:
+    ```bash
+        docker load -i <container-path>.tar
+    ```
+* Note that this does not export data from any containers that were based on the image, just the image itself.
+
+
+#### Describe the lifecycle of Docker Container?
+*    The most important stages are:
+    - Created: This is the state where the container has just been created new but not started yet.
+    - Running: In this state, the container would be running with all its associated processes.
+    - Paused : This state happens when the running container has been paused.
+    - Stopped: This state happens when the running container has been stopped.
+    - Deleted: In this, the container is in a dead state.
+
+* Docker containers commands:
+    ```bash
+        docker ps –all                   # List Currently Running Docker Containers
+        docker start <CONTAINER ID HERE> # Start Docker Container
+        docker stop <CONTAINER ID HERE>  # Stop Running Docker Container
+        docker rm <CONTAINER ID HERE>    # Delete Docker Container
+        # Note: To delete a running Docker container, you will need to first stop it. 
+        # Execute the docker stop <CONTAINER ID> command to first stop running docker container.
+        For example:
+        docker build --tag=albums-microservice --force-rm=true .
+        docker run -d <IMAGE NAME>       # Run Docker Image in Docker Container
+        # Where -d is used to detach the process so you can continue working with a terminal window and execute other commands.
+        docker logs <CONTAINER ID HERE>                      ----> Check Docker Container Logs
+        docker logs ceaf9e1ebef5                             ----> Check Docker Container Logs
+        docker inspect <CONTAINER ID HERE>                   ----> Inspect Docker Container
+        docker exec -it <CONTAINER ID HERE> <COMMAND TO RUN> ----> Execute Commands in Docker Container
+            For example:
+            docker exec -it 67e36143717b ls
+            docker exec -it 67e36143717b bash
+            docker run <CONTAINER ID> -e "<ENVIRONMENT VARIABLE NAME>=<VALUE>" # Pass Environment Variables
+            # For example:
+            docker run ceaf9e1ebef5 -e "SPRING_PROFILES_ACTIVE=dev" -e "server.port=8080"
+    ```
+
