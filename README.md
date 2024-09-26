@@ -115,11 +115,48 @@ from the top down, so you should order them accordingly.
 *   Dockerfile 
     - Example
     ``` bash
-    # syntax=docker/dockerfile:1
+        # syntax=docker/dockerfile:1
         FROM node:18-alpine
         WORKDIR /app
         COPY . .
         RUN yarn install --production
         CMD ["node", "src/index.js"]
         EXPOSE 3000
+    ```
+
+#### Docker Commands
+* Login commands :
+    ``` bash
+        docker login --username <Username> --passwd <password> url
+        docker login -u deflow -p 
+        docker login -u admin -p admin123 172.31.90.102:8083  #  In case of nexus
+        docker login -u admin -p admin123 nexus.tcs.com       #  In case of nexus(domain name)
+        docker login -u admin -p admin123 146866.dkr.ecr.ap-south-1.amazonaws.com # In case of Aws ECR
+    ```
+
+* Docker Image commands:
+    ``` bash
+        docker images -a    # List Docker Images on Computer
+        docker build --tag=<IMAGE TAG NAME> --force-rm=true . # Build Docker Image 
+        docker build -t <imageTag> <Buildcontext>  # To build Image
+        docker build -t deflow/maven-app:1 .       # To build Image with docker file
+        docker push <imagename/tag>                # TO push image into repo
+        docker pull <imagename/tag>                # TO pull image from repo
+        docker tag <imagesID> <registry/repo:tag>  # TO tag a image 
+        # examples
+        docker tag <imagesID> deflow/maven-app:laste        
+        docker tag <imagesID> deflow/maven-app:laste1
+        docker tag <imagesID> deflow/maven-app:laste2
+        docker rmi <IMAGE ID HERE>                  # Remove Docker Image
+        docker rmi -f <IMAGE ID HERE>               # Remove Docker Image
+        docker rmi $(docker images -f dangling=true) # Remove All Docker Images on Computer
+        docker images -f dangling=true               # to see untag images
+        docker image inspect <ImageID/name>          # Information about image
+        docker inspect --format '{{.state.status}}' <containerName> # inspect with particular format
+        docker history  <imageID/name>               # to see layers of images
+        docker rmi $(docker images -a)               # To delete all images 
+        docker rmi -f $(docker images -a -f dangling=true)   # TO delete dangling images
+        docker search <imagename>                     # it will search in registry
+        docker save <imageName> -0 <fileName>.tar     # to save image 
+        docker load -i <fileName>.tar                 # to load image
     ```
